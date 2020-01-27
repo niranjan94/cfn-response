@@ -26,9 +26,9 @@ def send(event, context, response_status, reason=None, response_data=None, physi
     )
 
     opener = build_opener(HTTPHandler)
-    request = Request(event['ResponseURL'], data=response_body)
+    request = Request(event['ResponseURL'], data=response_body.encode('utf-8'))
     request.add_header('Content-Type', '')
-    request.add_header('Content-Length', len(response_body))
+    request.add_header('Content-Length', str(len(response_body)))
     request.get_method = lambda: 'PUT'
     try:
         response = opener.open(request)
